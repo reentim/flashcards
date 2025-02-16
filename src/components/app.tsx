@@ -1,9 +1,17 @@
-import '../styles/app.css';
+import { Switch, Route } from 'wouter-preact';
+
+import { DeckList } from './deckList';
+import { Deck } from './deck';
+
+import './app.css';
 
 export const App = () => {
   return (
     <>
-      <h1>App</h1>
+      <Switch>
+        <Route path="/decks" component={DeckList} />
+        <Route path="/decks/:id" component={Deck} />
+      </Switch>
     </>
   );
 };

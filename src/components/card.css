@@ -1,0 +1,13 @@
+.card {
+  background-color: beige;
+  color: #333;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin: 0 auto;
+  padding: 2em;
+  text-align: center;
+}
+
+.term {
+  font-size: 64pt;
+}
