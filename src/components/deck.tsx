@@ -1,7 +1,7 @@
-import { useParams } from 'wouter-preact';
+import { useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-import DeckData, { CardsData } from '../deckData';
+import DeckData, { IterableCardsData } from '../deckData';
 import ResponseData from '../responseData';
 
 import { Card } from './card';
@@ -21,9 +21,24 @@ export const Deck = () => {
   const [index, setIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
   const [satisfaction, setSatisfaction] = useState<SatisfactionData>({});
-  const [cardsData, setCardsData] = useState<CardsData | null>(null);
-  const [deckMetaData, setDeckmetaData] = useState<DeckMetaData>(null);
+  const [cardsData, setCardsData] = useState<IterableCardsData | null>(null);
+  const [deckMetaData, setDeckMetaData] = useState<DeckMetaData>(null);
   const [responseId, setResponseId] = useState<string | null>(null);
+
+  const [_location, setLocation] = useLocation();
+
+  const learntCount = (deckMetaData?.size || 0) - (cardsData?.length || 0);
+  const remainingCount = (deckMetaData?.size || 0) - index - learntCount;
+  const cardsRemainingSummary = [
+    learntCount > 0 && `${learntCount} learnt`,
+    `${remainingCount} to review`,
+  ]
+    .filter((val) => val)
+    .join(', ');
+  const answerCount = Object.values(satisfaction).length;
+  const satisfiedCount = Object.values(satisfaction).filter(
+    (value) => value === 1
+  ).length;
 
   const deckId = useParams().id;
   const cardData = {
@@ -43,8 +58,10 @@ export const Deck = () => {
     const deck = DeckData.find(deckId);
 
     if (deck) {
-      setCardsData(deck.cards);
-      setDeckmetaData({ name: deck.name, size: deck.size });
+      setCardsData(deck.orderedCards());
+      setDeckMetaData({ name: deck.name, size: deck.size });
+    } else {
+      setLocation('/');
     }
 
     setResponseId(crypto.randomUUID());
@@ -88,11 +105,11 @@ export const Deck = () => {
     const { satisfaction: value, cardId } = props;
 
     setSatisfaction(Object.assign(satisfaction, { [cardId]: value }));
-    new ResponseData({
+    ResponseData.saveNew({
       id: refs.current.responseId!,
       deckId: deckId!,
       satisfaction: satisfaction,
-    }).save();
+    });
     selectNextCard();
   };
 
@@ -104,14 +121,19 @@ export const Deck = () => {
   const metaDataUi = (
     <div className="metaData">
       <h3>
-        {deckMetaData?.name} &bull; {deckMetaData?.size} cards
+        {deckMetaData?.name} &bull; {cardsRemainingSummary}
+        {answerCount > 0 && (
+          <>
+            &nbsp;&bull; {satisfiedCount}/{answerCount}
+          </>
+        )}
       </h3>
     </div>
   );
 
   const deckUi = (
     <>
-      {deckMetaData && metaDataUi}
+      {metaDataUi}
       <Card
         isRevealed={isRevealed}
         term={cardData.term}
@@ -120,5 +142,5 @@ export const Deck = () => {
     </>
   );
 
-  return <>{deckUi}</>;
+  return <section className="deck">{deckUi}</section>;
 };

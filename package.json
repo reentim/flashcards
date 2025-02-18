@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/pako": "^2.0.3",
+    "lodash": "^4.17.21",
     "preact": "^10.25.4"
   },
   "devDependencies": {
@@ -19,6 +20,7 @@
     "@preact/preset-vite": "^2.10.1",
     "@testing-library/preact": "^3.2.4",
     "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.15",
     "eslint": "^9.20.0",
     "eslint-config-prettier": "^10.0.1",
     "globals": "^15.14.0",

@@ -1,35 +1,48 @@
 import Storage from './storage';
 
-type Satisfaction = {
+export type Satisfaction = {
   [cardId: string]: 0 | 1;
 };
 
-interface ResponseDataProps {
+interface NewResponseData {
   id: string;
   deckId: string;
   satisfaction: Satisfaction;
 }
 
+interface ResponseDataProps {
+  id: string;
+  satisfaction: Satisfaction;
+}
+
 export default class ResponseData {
   id: string;
-  deckId: string;
   satisfaction: Satisfaction;
 
   constructor(props: ResponseDataProps) {
-    const { id, deckId, satisfaction } = props;
+    const { id, satisfaction } = props;
 
     this.id = id;
-    this.deckId = deckId;
     this.satisfaction = satisfaction;
   }
 
-  save() {
-    const existingResponseIds = Storage.get(`deck_${this.deckId}_responseIds`) || [];
+  static find(id: string | undefined): ResponseData | undefined {
+    const response = id && Storage.get(`response_${id}`);
 
-    if (!existingResponseIds.includes(this.id)) {
-      Storage.set(`deck_${this.deckId}_responseIds`, [...existingResponseIds, this.id]);
+    return response && new this({ id: id, satisfaction: response });
+  }
+
+  static saveNew(data: NewResponseData) {
+    const existingResponseIds =
+      Storage.get(`deck_${data.deckId}_responseIds`) || [];
+
+    if (!existingResponseIds.includes(data.id)) {
+      Storage.set(`deck_${data.deckId}_responseIds`, [
+        ...existingResponseIds,
+        data.id,
+      ]);
     }
 
-    Storage.set(`response_${this.id}`, this.satisfaction);
+    Storage.set(`response_${data.id}`, data.satisfaction);
   }
 }
