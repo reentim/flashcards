@@ -1,7 +1,8 @@
 import { useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-import DeckData, { IterableCardsData } from '../deckData';
+import DeckData from '../deckData';
+import { IterableCardsData } from '../cardSet';
 import ResponseData from '../responseData';
 
 import { Card } from './card';
@@ -24,10 +25,11 @@ export const Deck = () => {
   const [cardsData, setCardsData] = useState<IterableCardsData | null>(null);
   const [deckMetaData, setDeckMetaData] = useState<DeckMetaData>(null);
   const [responseId, setResponseId] = useState<string | null>(null);
+  const [learnableCardIds, setLearnableCardIds] = useState<Array<string>>([]);
+  const [learntCount, setLearntCount] = useState(0);
 
   const [_location, setLocation] = useLocation();
 
-  const learntCount = (deckMetaData?.size || 0) - (cardsData?.length || 0);
   const remainingCount = (deckMetaData?.size || 0) - index - learntCount;
   const cardsRemainingSummary = [
     learntCount > 0 && `${learntCount} learnt`,
@@ -46,20 +48,23 @@ export const Deck = () => {
     term: cardsData?.at(index)?.at(1) as string,
     definition: cardsData?.at(index)?.at(2) as string,
   };
-
   const refs = useRef({
     isRevealed: isRevealed,
     index: index,
     cardData: cardData,
     responseId: responseId,
+    learntCount: learntCount,
+    learnableCardIds: learnableCardIds,
   });
 
   useEffect(() => {
     const deck = DeckData.find(deckId);
 
     if (deck) {
-      setCardsData(deck.orderedCards());
+      setCardsData(deck.cardSet.orderedCards());
+      setLearnableCardIds(Array.from(deck.cardSet.learnableCardIds()));
       setDeckMetaData({ name: deck.name, size: deck.size });
+      setLearntCount(deck.cardSet.learntCardIds().size);
     } else {
       setLocation('/');
     }
@@ -72,7 +77,16 @@ export const Deck = () => {
     refs.current.isRevealed = isRevealed;
     refs.current.cardData = cardData;
     refs.current.responseId = responseId;
-  }, [index, isRevealed, cardData, responseId]);
+    refs.current.learntCount = learntCount;
+    refs.current.learnableCardIds = learnableCardIds;
+  }, [
+    index,
+    isRevealed,
+    cardData,
+    responseId,
+    learntCount,
+    learnableCardIds,
+  ]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -101,8 +115,16 @@ export const Deck = () => {
     setIsRevealed(true);
   };
 
+  const isCardLearnable = (cardId: number) => {
+    return refs.current.learnableCardIds.includes(`${cardId}`)
+  }
+
   const saveResponse = (props: { satisfaction: 0 | 1; cardId: number }) => {
     const { satisfaction: value, cardId } = props;
+
+    if (value === 1 && isCardLearnable(cardId)) {
+      setLearntCount(refs.current.learntCount + 1);
+    }
 
     setSatisfaction(Object.assign(satisfaction, { [cardId]: value }));
     ResponseData.saveNew({

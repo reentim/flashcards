@@ -1,7 +1,6 @@
-import { shuffle } from 'lodash';
-
 import Storage from './storage';
 import ResponseData from './responseData';
+import CardSet from './cardSet';
 
 interface DeckOptions {
   id: string;
@@ -12,9 +11,6 @@ interface DeckOptions {
 type CardsData = {
   [id: string]: [string, string];
 };
-
-type IterableCard = [number, string, string];
-export type IterableCardsData = Array<IterableCard>;
 
 interface ParsedDeckJSON {
   name: string;
@@ -32,6 +28,7 @@ export default class DeckData {
   name: string;
   cards: CardsData;
   settings: DeckSettings;
+  cardSet: CardSet;
 
   constructor(props: DeckOptions) {
     const { id, name, cards } = props;
@@ -42,6 +39,7 @@ export default class DeckData {
     this.settings = Storage.get(`deck_${id}_options`) || {
       markAsLearntAfter: 3,
     };
+    this.cardSet = new CardSet(this);
   }
 
   static all(): Array<DeckData> {
@@ -100,54 +98,5 @@ export default class DeckData {
     if (id) {
       return ResponseData.find(id);
     }
-  }
-
-  orderedCards(): IterableCardsData {
-    const allAnswers: Array<[string, number][]> = this.responses().map(
-      (response: ResponseData) => Object.entries(response.satisfaction)
-    );
-    const learntCardIds = new Set(
-      Object.entries(
-        allAnswers.reduce(
-          (acc, response) => {
-            response.forEach(([cardId, value]) => {
-              acc[cardId] = value === 0 ? 0 : (acc[cardId] || 0) + value;
-            });
-            return acc;
-          },
-          {} as { [key: string]: number }
-        )
-      )
-        .filter(
-          ([_cardId, streak]) => streak >= this.settings.markAsLearntAfter
-        )
-        .map(([cardId, _streak]) => cardId)
-    );
-    const cardIds = new Set(Object.keys(this.cards)).difference(learntCardIds);
-    const previouslyCorrectCardIds = new Set(
-      allAnswers
-        .flat(1)
-        .filter(([_cardId, satisfaction]) => satisfaction === 1)
-        .map(([cardId, _satisfaction]) => cardId)
-    ).intersection(cardIds);
-    const previouslyIncorrectCardIds = new Set(
-      allAnswers
-        .flat(1)
-        .filter(([_cardId, satisfaction]) => satisfaction === 0)
-        .map(([cardId, _satisfaction]) => cardId)
-    )
-      .difference(previouslyCorrectCardIds)
-      .intersection(cardIds);
-    const previouslyUnansweredCardIds = cardIds.difference(
-      previouslyCorrectCardIds.union(previouslyIncorrectCardIds)
-    );
-
-    return [
-      previouslyCorrectCardIds,
-      previouslyIncorrectCardIds,
-      previouslyUnansweredCardIds,
-    ]
-      .flatMap((set) => shuffle(Array.from(set)) as Array<string>)
-      .map((id: string) => [parseInt(id), ...this.cards[id]]);
   }
 }
