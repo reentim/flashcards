@@ -2,4 +2,43 @@
   .metaData {
     text-align: center;
   }
+
+  .celebrateLearnt {
+    position: relative;
+
+    &::after {
+      content: '🥳';
+      position: absolute;
+      left: 0;
+      top: -1.25em;
+      font-size: 12pt;
+      animation: celebrate 1000ms ease-out;
+    }
+  }
+}
+
+@keyframes celebrate {
+  0% {
+    rotate: 0deg;
+  }
+
+  25% {
+    rotate: 18deg;
+  }
+
+  50% {
+    opacity: 1;
+    rotate: -18deg;
+  }
+
+  75% {
+    rotate: 18deg;
+  }
+
+  100% {
+    top: -5em;
+    scale: 4;
+    opacity: 0;
+    rotate: -18deg;
+  }
 }

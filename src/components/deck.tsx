@@ -24,9 +24,10 @@ export const Deck = () => {
   const [satisfaction, setSatisfaction] = useState<SatisfactionData>({});
   const [cardsData, setCardsData] = useState<IterableCardsData | null>(null);
   const [deckMetaData, setDeckMetaData] = useState<DeckMetaData>(null);
-  const [responseId, setResponseId] = useState<string | null>(null);
+  const [isCelebrateLearntCard, setIsCelebrateLearntCard] = useState(false);
   const [learnableCardIds, setLearnableCardIds] = useState<Array<string>>([]);
   const [learntCount, setLearntCount] = useState(0);
+  const [responseId, setResponseId] = useState<string | null>(null);
 
   const [_location, setLocation] = useLocation();
 
@@ -52,9 +53,9 @@ export const Deck = () => {
     isRevealed: isRevealed,
     index: index,
     cardData: cardData,
-    responseId: responseId,
-    learntCount: learntCount,
     learnableCardIds: learnableCardIds,
+    learntCount: learntCount,
+    responseId: responseId,
   });
 
   useEffect(() => {
@@ -116,13 +117,19 @@ export const Deck = () => {
   };
 
   const isCardLearnable = (cardId: number) => {
-    return refs.current.learnableCardIds.includes(`${cardId}`)
-  }
+    return refs.current.learnableCardIds.includes(`${cardId}`);
+  };
+
+  const celebrateLearnt = () => {
+    setIsCelebrateLearntCard(true);
+    setTimeout(() => setIsCelebrateLearntCard(false), 1000);
+  };
 
   const saveResponse = (props: { satisfaction: 0 | 1; cardId: number }) => {
     const { satisfaction: value, cardId } = props;
 
     if (value === 1 && isCardLearnable(cardId)) {
+      celebrateLearnt();
       setLearntCount(refs.current.learntCount + 1);
     }
 
@@ -143,7 +150,10 @@ export const Deck = () => {
   const metaDataUi = (
     <div className="metaData">
       <h3>
-        {deckMetaData?.name} &bull; {cardsRemainingSummary}
+        {deckMetaData?.name} &bull;&nbsp;
+        <span className={isCelebrateLearntCard ? 'celebrateLearnt' : ''}>
+          {cardsRemainingSummary}
+        </span>
         {answerCount > 0 && (
           <>
             &nbsp;&bull; {satisfiedCount}/{answerCount}

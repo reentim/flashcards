@@ -6,8 +6,17 @@
   margin: 0 auto;
   padding: 2em;
   text-align: center;
-}
 
-.term {
-  font-size: 64pt;
+  .term {
+    font-size: 64pt;
+  }
+
+  .definition {
+    opacity: 0;
+
+    &.reveal {
+      opacity: 1;
+      transition: opacity 200ms ease-in;
+    }
+  }
 }
