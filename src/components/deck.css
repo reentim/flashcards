@@ -3,42 +3,42 @@
     text-align: center;
   }
 
-  .celebrateLearnt {
+  .animationAnchor {
     position: relative;
+  }
 
-    &::after {
-      content: '🥳';
-      position: absolute;
-      left: 0;
-      top: -1.25em;
-      font-size: 12pt;
-      animation: celebrate 1000ms ease-out;
-    }
+  .celebrateLearnt::after {
+    content: '🌟';
+    position: absolute;
+    left: 0;
+    top: -1.25em;
+    opacity: 0;
+    font-size: 12pt;
+    width: 100%;
+    animation: celebrate 1000ms ease-out forwards;
   }
 }
 
 @keyframes celebrate {
   0% {
-    rotate: 0deg;
-  }
-
-  25% {
-    rotate: 18deg;
   }
 
   50% {
     opacity: 1;
-    rotate: -18deg;
   }
 
   75% {
-    rotate: 18deg;
+    scale: 2;
+  }
+
+  90% {
+    top: -4em;
+    opacity: 1;
   }
 
   100% {
-    top: -5em;
-    scale: 4;
     opacity: 0;
-    rotate: -18deg;
+    top: -4em;
+    scale: 4;
   }
 }

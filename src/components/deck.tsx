@@ -18,26 +18,30 @@ type SatisfactionData = {
   [cardId: string]: 0 | 1;
 };
 
+type Animations = {
+  learnt: number[];
+};
+
+const LearntTermCelebration = () => {
+  return (
+    <span className="celebrateLearnt" />
+  )
+}
+
 export const Deck = () => {
   const [index, setIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
-  const [satisfaction, setSatisfaction] = useState<SatisfactionData>({});
   const [cardsData, setCardsData] = useState<IterableCardsData | null>(null);
   const [deckMetaData, setDeckMetaData] = useState<DeckMetaData>(null);
-  const [isCelebrateLearntCard, setIsCelebrateLearntCard] = useState(false);
   const [learnableCardIds, setLearnableCardIds] = useState<Array<string>>([]);
   const [learntCount, setLearntCount] = useState(0);
   const [responseId, setResponseId] = useState<string | null>(null);
+  const [satisfaction, setSatisfaction] = useState<SatisfactionData>({});
+  const [animations, setAnimations] = useState<Animations>({ learnt: [] });
 
   const [_location, setLocation] = useLocation();
 
   const remainingCount = (deckMetaData?.size || 0) - index - learntCount;
-  const cardsRemainingSummary = [
-    learntCount > 0 && `${learntCount} learnt`,
-    `${remainingCount} to review`,
-  ]
-    .filter((val) => val)
-    .join(', ');
   const answerCount = Object.values(satisfaction).length;
   const satisfiedCount = Object.values(satisfaction).filter(
     (value) => value === 1
@@ -54,9 +58,16 @@ export const Deck = () => {
     index: index,
     cardData: cardData,
     learnableCardIds: learnableCardIds,
-    learntCount: learntCount,
     responseId: responseId,
   });
+
+  useEffect(() => {
+    refs.current.index = index;
+    refs.current.isRevealed = isRevealed;
+    refs.current.cardData = cardData;
+    refs.current.responseId = responseId;
+    refs.current.learnableCardIds = learnableCardIds;
+  }, [index, isRevealed, cardData, responseId, learnableCardIds]);
 
   useEffect(() => {
     const deck = DeckData.find(deckId);
@@ -72,22 +83,6 @@ export const Deck = () => {
 
     setResponseId(crypto.randomUUID());
   }, []);
-
-  useEffect(() => {
-    refs.current.index = index;
-    refs.current.isRevealed = isRevealed;
-    refs.current.cardData = cardData;
-    refs.current.responseId = responseId;
-    refs.current.learntCount = learntCount;
-    refs.current.learnableCardIds = learnableCardIds;
-  }, [
-    index,
-    isRevealed,
-    cardData,
-    responseId,
-    learntCount,
-    learnableCardIds,
-  ]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -121,8 +116,22 @@ export const Deck = () => {
   };
 
   const celebrateLearnt = () => {
-    setIsCelebrateLearntCard(true);
-    setTimeout(() => setIsCelebrateLearntCard(false), 1000);
+    const animationId = Date.now();
+
+    setLearntCount((learntCount) => learntCount + 1);
+    setAnimations((animations: Animations) => ({
+      ...animations,
+      learnt: [...animations.learnt, animationId],
+    }));
+
+    setTimeout(() => {
+      setAnimations((animations) => {
+        return {
+          ...animations,
+          learnt: animations.learnt.filter((id) => id !== animationId),
+        };
+      });
+    }, 1000);
   };
 
   const saveResponse = (props: { satisfaction: 0 | 1; cardId: number }) => {
@@ -130,7 +139,6 @@ export const Deck = () => {
 
     if (value === 1 && isCardLearnable(cardId)) {
       celebrateLearnt();
-      setLearntCount(refs.current.learntCount + 1);
     }
 
     setSatisfaction(Object.assign(satisfaction, { [cardId]: value }));
@@ -147,13 +155,23 @@ export const Deck = () => {
     setIsRevealed(false);
   };
 
+  const celebrateLearntAnimations = animations['learnt'].map((id) => (
+    <LearntTermCelebration key={id} />
+  ));
+
   const metaDataUi = (
     <div className="metaData">
       <h3>
         {deckMetaData?.name} &bull;&nbsp;
-        <span className={isCelebrateLearntCard ? 'celebrateLearnt' : ''}>
-          {cardsRemainingSummary}
-        </span>
+        {learntCount > 0 && (
+          <>
+            <span className="animationAnchor">
+              {celebrateLearntAnimations}
+              {learntCount} learnt,&nbsp;
+            </span>
+          </>
+        )}
+        {remainingCount} to review
         {answerCount > 0 && (
           <>
             &nbsp;&bull; {satisfiedCount}/{answerCount}
