@@ -7,6 +7,18 @@
   padding: 2em;
   text-align: center;
 
+  position: absolute;
+  top: 4em;
+  min-width: 250px;
+
+  &.satisfied {
+    animation: satisfied 1000ms ease-out forwards;
+  }
+
+  &.dissatisfied {
+    animation: dissatisfied 1000ms ease-out forwards;
+  }
+
   .term {
     font-size: 64pt;
   }
@@ -18,5 +30,37 @@
       opacity: 1;
       transition: opacity 200ms ease-in;
     }
+  }
+}
+
+@keyframes satisfied {
+  25% {
+    opacity: 1;
+  }
+
+  75% {
+    translate: 200%;
+    opacity: 0;
+  }
+
+  100% {
+    rotate: 30deg;
+    opacity: 0;
+  }
+}
+
+@keyframes dissatisfied {
+  25% {
+    opacity: 1;
+  }
+
+  75% {
+    translate: -200%;
+    opacity: 0;
+  }
+
+  100% {
+    rotate: -30deg;
+    opacity: 0;
   }
 }

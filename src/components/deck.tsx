@@ -22,11 +22,23 @@ type Animations = {
   learnt: number[];
 };
 
-const LearntTermCelebration = () => {
-  return (
-    <span className="celebrateLearnt" />
-  )
+type CardData = {
+  id: number;
+  term: string;
+  definition: string;
+};
+
+type AnsweredCards = {
+  [id: string]: AnsweredCardData;
+};
+
+interface AnsweredCardData extends CardData {
+  satisfactionClassName?: 'satisfied' | 'dissatisfied';
 }
+
+const LearntTermCelebration = () => {
+  return <span className="celebrateLearnt" />;
+};
 
 export const Deck = () => {
   const [index, setIndex] = useState(0);
@@ -38,6 +50,7 @@ export const Deck = () => {
   const [responseId, setResponseId] = useState<string | null>(null);
   const [satisfaction, setSatisfaction] = useState<SatisfactionData>({});
   const [animations, setAnimations] = useState<Animations>({ learnt: [] });
+  const [answeredCards, setAnsweredCards] = useState<AnsweredCards>({});
 
   const [_location, setLocation] = useLocation();
 
@@ -53,6 +66,7 @@ export const Deck = () => {
     term: cardsData?.at(index)?.at(1) as string,
     definition: cardsData?.at(index)?.at(2) as string,
   };
+
   const refs = useRef({
     isRevealed: isRevealed,
     index: index,
@@ -134,19 +148,41 @@ export const Deck = () => {
     }, 1000);
   };
 
-  const saveResponse = (props: { satisfaction: 0 | 1; cardId: number }) => {
-    const { satisfaction: value, cardId } = props;
+  const animateAnsweredCard = (cardId: number, satisfactionValue: number) => {
+    const className = satisfactionValue === 1 ? 'satisfied' : 'dissatisfied';
+    setAnsweredCards((answeredCards) =>
+      Object.assign(answeredCards, {
+        [cardId]: {
+          ...refs.current.cardData,
+          satisfactionClassName: className,
+        },
+      })
+    );
 
-    if (value === 1 && isCardLearnable(cardId)) {
+    setTimeout(() => {
+      setAnsweredCards((answeredCards) => {
+        delete answeredCards[`${cardId}`];
+        return answeredCards;
+      });
+    }, 1000);
+  };
+
+  const saveResponse = (props: { satisfaction: 0 | 1; cardId: number }) => {
+    const { satisfaction: satisfactionValue, cardId } = props;
+
+    if (satisfactionValue === 1 && isCardLearnable(cardId)) {
       celebrateLearnt();
     }
 
-    setSatisfaction(Object.assign(satisfaction, { [cardId]: value }));
+    setSatisfaction(
+      Object.assign(satisfaction, { [cardId]: satisfactionValue })
+    );
     ResponseData.saveNew({
       id: refs.current.responseId!,
       deckId: deckId!,
       satisfaction: satisfaction,
     });
+    animateAnsweredCard(cardId, satisfactionValue);
     selectNextCard();
   };
 
@@ -181,6 +217,20 @@ export const Deck = () => {
     </div>
   );
 
+  const answeredCardsUi = Object.keys(answeredCards).map((id) => {
+    const card = answeredCards[id];
+
+    return (
+      <Card
+        isRevealed={true}
+        term={card.term}
+        definition={card.definition}
+        satisfaction={card.satisfactionClassName}
+        key={card.id}
+      />
+    );
+  });
+
   const deckUi = (
     <>
       {metaDataUi}
@@ -189,6 +239,7 @@ export const Deck = () => {
         term={cardData.term}
         definition={cardData.definition}
       />
+      {answeredCardsUi}
     </>
   );
 

@@ -1,4 +1,9 @@
 .deck {
+  position: relative;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+
   .metaData {
     text-align: center;
   }

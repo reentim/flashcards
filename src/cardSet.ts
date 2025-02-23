@@ -3,7 +3,7 @@ import { shuffle } from 'lodash';
 import DeckData from './deckData';
 import ResponseData from './responseData';
 
-type IterableCard = [number, string, string];
+export type IterableCard = [number, string, string];
 
 export type IterableCardsData = Array<IterableCard>;
 
