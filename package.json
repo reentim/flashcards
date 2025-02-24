@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@types/pako": "^2.0.3",
     "lodash": "^4.17.21",
     "preact": "^10.25.4"

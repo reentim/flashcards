@@ -2,13 +2,15 @@ import Storage from './storage';
 import ResponseData from './responseData';
 import CardSet from './cardSet';
 
-interface DeckOptions {
+export interface DeckOptions {
   id: string;
   name: string;
   cards: CardsData;
+  nextId: number;
+  settings?: DeckSettings;
 }
 
-type CardsData = {
+export type CardsData = {
   [id: string]: [string, string];
 };
 
@@ -28,18 +30,20 @@ export default class DeckData {
   name: string;
   cards: CardsData;
   settings: DeckSettings;
+  nextId: number;
   cardSet: CardSet;
 
   constructor(props: DeckOptions) {
-    const { id, name, cards } = props;
+    const { id, name, cards, nextId } = props;
 
     this.id = id;
     this.name = name;
     this.cards = cards;
-    this.settings = Storage.get(`deck_${id}_options`) || {
+    this.settings = Storage.get(`deck_${id}_settings`) || {
       markAsLearntAfter: 3,
     };
     this.cardSet = new CardSet(this);
+    this.nextId = nextId;
   }
 
   static all(): Array<DeckData> {
@@ -49,13 +53,21 @@ export default class DeckData {
   }
 
   static find(id: string | undefined): DeckData | undefined {
-    const deck = id && Storage.get(`deck_${id}`);
+    const data = id && Storage.get(`deck_${id}`);
 
-    return deck && new this({ id: id, name: deck.name, cards: deck.cards });
+    return (
+      data &&
+      new this({
+        id: id,
+        name: data.name,
+        cards: data.cards,
+        nextId: data.nextId,
+      })
+    );
   }
 
   static prepareInbuilt() {
-    if (!Storage.get('deckIds')) {
+    if (Storage.get('deckIds')?.length === 0) {
       const decks = ['worldFlags', 'russianNouns'];
 
       decks.forEach((deck) => {
@@ -71,11 +83,15 @@ export default class DeckData {
 
   static saveNew(data: ParsedDeckJSON) {
     const id = crypto.randomUUID();
+    const cards = Object.fromEntries(
+      Object.entries(data.cards).map((e, i) => [i + 1, [...e]])
+    );
+
     const transformedData = {
       ...data,
-      cards: Object.fromEntries(
-        Object.entries(data.cards).map((e, i) => [i + 1, [...e]])
-      ),
+      cards: cards,
+      nextId:
+        Math.max(...Object.keys(cards).map((key: string) => parseInt(key))) + 1,
     };
 
     Storage.append('deckIds', id);
@@ -84,6 +100,25 @@ export default class DeckData {
 
   get size() {
     return Object.keys(this.cards).length;
+  }
+
+  save(args: DeckOptions) {
+    const { name, cards, settings } = args;
+    let { nextId } = args;
+
+    if (Object.keys(cards).length > Object.keys(this.cards).length) {
+      nextId += 1;
+    }
+
+    this.cards = cards;
+    this.name = name;
+    this.nextId = nextId;
+    Storage.set(`deck_${this.id}`, { name, cards, nextId });
+
+    if (settings) {
+      this.settings = settings;
+      Storage.set(`deck_${this.id}_settings`, settings);
+    }
   }
 
   responses() {

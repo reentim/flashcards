@@ -60,7 +60,7 @@ export const Deck = () => {
     (value) => value === 1
   ).length;
 
-  const deckId = useParams().id;
+  const { id: deckId } = useParams();
   const cardData = {
     id: cardsData?.at(index)?.at(0) as number,
     term: cardsData?.at(index)?.at(1) as string,
