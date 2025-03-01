@@ -1,8 +1,5 @@
 .deck {
-  position: relative;
-  display: flex;
-  place-items: center;
-  justify-content: center;
+  margin-top: 4em;
 
   .metaData {
     text-align: center;
