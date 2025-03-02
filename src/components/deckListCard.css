@@ -1,0 +1,16 @@
+.deckListCard {
+  padding: 1em;
+  background: #2f2f2f;
+  text-align: center;
+  border-radius: 10px;
+  height: 200px;
+
+  &.new {
+    background-color: #363654;
+  }
+
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

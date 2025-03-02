@@ -1,5 +1,5 @@
 import { Link, useParams, useLocation } from 'wouter-preact';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import { useState, useEffect, useRef, useLayoutEffect } from 'preact/hooks';
 import {
   ArrowPathIcon,
   TrashIcon,
@@ -28,6 +28,7 @@ export const EditDeck = () => {
   const nextIdRef = useRef(0);
   const handleSaveTimeoutIdRef = useRef<number | null>(null);
   const newCardTermRef = useRef<HTMLTextAreaElement>(null);
+  const deckNameRef = useRef<HTMLInputElement>(null);
   const newCardRef = useRef<NewCard>({ term: '', definition: '' });
   const deckDataRef = useRef<DeckData | null>(null);
   const cardsRef = useRef<CardsData | null>(null);
@@ -52,6 +53,14 @@ export const EditDeck = () => {
       setLocation('/');
     }
   }, []);
+
+  useLayoutEffect(() => {
+    const deck = DeckData.find(deckId);
+
+    if (deck?.name === 'New deck') {
+      deckNameRef.current?.select();
+    }
+  });
 
   const handleNewCardInput = (field: 'term' | 'definition', value: string) => {
     newCardRef.current = {
@@ -197,6 +206,7 @@ export const EditDeck = () => {
             <div className="gridCell deckName col-span-2">
               <input
                 type="text"
+                ref={deckNameRef}
                 value={deckData?.name}
                 onInput={(event) =>
                   updateDeck('name', event.currentTarget.value)

@@ -90,10 +90,6 @@ textarea {
   background: #4e4c4e;
 }
 
-.icon {
-  width: 1.5em;
-}
-
 .checkSaved {
   color: #58b658;
   animation: grow 500ms ease forwards;

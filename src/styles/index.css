@@ -26,6 +26,7 @@
 body {
   margin: 0;
   padding: 2em;
+
   display: flex;
   justify-content: center;
   min-width: 320px;
@@ -122,5 +123,13 @@ button,
 
   &:hover {
     background: #242424;
+  }
+}
+
+.icon {
+  width: 1.5em;
+
+  &.lg {
+    width: 2.5em;
   }
 }

@@ -1,16 +1,24 @@
 import { Link } from 'wouter-preact';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+
+import { DeckListCard } from './deckListCard';
 
 import DeckData from '../deckData';
 
-export const DeckList = () => {
-  const deckUi = (deck: DeckData) => (
-    <li>
-      <Link to={`/decks/${deck.id}`}>{deck.name}</Link>
-    </li>
-  );
-  const decksUi = DeckData.all().map((deck) => {
-    return <ul>{deckUi(deck)}</ul>;
-  });
+import './deckList.css';
 
-  return <>{decksUi}</>;
+export const DeckList = () => {
+  const decks = [
+    <div className="deckListCard new">
+      <h3>
+        <Link to="/decks/new">New Deck</Link>
+      </h3>
+      <PlusCircleIcon className="icon lg" />
+    </div>,
+    DeckData.all().map((deck) => {
+      return <DeckListCard key={deck.id} deck={deck} />;
+    }),
+  ];
+
+  return <section className="deckList">{decks}</section>;
 };

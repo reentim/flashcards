@@ -2,7 +2,7 @@ import Storage from './storage';
 import ResponseData from './responseData';
 import CardSet from './cardSet';
 
-export interface DeckOptions {
+export interface DeckProps {
   id: string;
   name: string;
   cards: CardsData;
@@ -33,7 +33,7 @@ export default class DeckData {
   nextId: number;
   cardSet: CardSet;
 
-  constructor(props: DeckOptions) {
+  constructor(props: DeckProps) {
     const { id, name, cards, nextId } = props;
 
     this.id = id;
@@ -96,13 +96,15 @@ export default class DeckData {
 
     Storage.append('deckIds', id);
     Storage.set(`deck_${id}`, transformedData);
+
+    return this.find(id);
   }
 
   get size() {
     return Object.keys(this.cards).length;
   }
 
-  save(args: DeckOptions) {
+  save(args: DeckProps) {
     const { name, cards, settings } = args;
     let { nextId } = args;
 

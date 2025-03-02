@@ -41,6 +41,11 @@ const LearntTermCelebration = () => {
 };
 
 export const Deck = () => {
+  const { id: deckId } = useParams();
+  const deck = DeckData.find(deckId);
+
+  const [_location, setLocation] = useLocation();
+
   const [index, setIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
   const [cardsData, setCardsData] = useState<IterableCardsData | null>(null);
@@ -52,15 +57,12 @@ export const Deck = () => {
   const [animations, setAnimations] = useState<Animations>({ learnt: [] });
   const [answeredCards, setAnsweredCards] = useState<AnsweredCards>({});
 
-  const [_location, setLocation] = useLocation();
-
   const remainingCount = (deckMetaData?.size || 0) - index - learntCount;
   const answerCount = Object.values(satisfaction).length;
   const satisfiedCount = Object.values(satisfaction).filter(
     (value) => value === 1
   ).length;
 
-  const { id: deckId } = useParams();
   const cardData = {
     id: cardsData?.at(index)?.at(0) as number,
     term: cardsData?.at(index)?.at(1) as string,
@@ -75,6 +77,10 @@ export const Deck = () => {
     responseId: responseId,
   });
 
+  if (deck?.size === 0) {
+    setLocation(`/decks/${deck.id}/edit`, { replace: true });
+  }
+
   useEffect(() => {
     refs.current.index = index;
     refs.current.isRevealed = isRevealed;
@@ -84,8 +90,6 @@ export const Deck = () => {
   }, [index, isRevealed, cardData, responseId, learnableCardIds]);
 
   useEffect(() => {
-    const deck = DeckData.find(deckId);
-
     if (deck) {
       setCardsData(deck.cardSet.orderedCards());
       setLearnableCardIds(Array.from(deck.cardSet.learnableCardIds()));
