@@ -238,12 +238,14 @@ export const Deck = () => {
   const deckUi = (
     <>
       {metaDataUi}
-      <Card
-        isRevealed={isRevealed}
-        term={cardData.term}
-        definition={cardData.definition}
-      />
-      {answeredCardsUi}
+      <div className="cardsContainer">
+        <Card
+          isRevealed={isRevealed}
+          term={cardData.term}
+          definition={cardData.definition}
+        />
+        {answeredCardsUi}
+      </div>
     </>
   );
 

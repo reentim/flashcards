@@ -14,13 +14,24 @@ export const Card = ({
   definition,
   satisfaction,
 }: CardProps) => {
-  const classes = ['card', satisfaction].filter((val) => val).join(' ');
+  const classes = [
+    'card',
+    satisfaction,
+    !satisfaction && 'answering',
+    isRevealed ? 'revealed' : '',
+  ]
+    .filter((val) => val)
+    .join(' ');
 
   return (
     <div className={classes}>
-      <div className="term">{term}</div>
-      <div className={['definition', isRevealed ? 'reveal' : ''].join(' ')}>
-        {definition}
+      <div className="front">
+        <div className="term">{term}</div>
+      </div>
+
+      <div className="back">
+        <div className="term">{term}</div>
+        <div className="definition">{definition}</div>
       </div>
     </div>
   );

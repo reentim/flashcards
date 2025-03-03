@@ -26,7 +26,6 @@
 body {
   margin: 0;
   padding: 2em;
-
   display: flex;
   justify-content: center;
   min-width: 320px;
