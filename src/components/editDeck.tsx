@@ -1,13 +1,14 @@
-import { Link, useParams, useLocation } from 'wouter-preact';
+import { useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef, useLayoutEffect } from 'preact/hooks';
 import {
   ArrowPathIcon,
   TrashIcon,
-  XMarkIcon,
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 
 import DeckData, { CardsData } from '../deckData';
+
+import { CloseButton } from './closeButton';
 
 import './editDeck.css';
 
@@ -201,14 +202,10 @@ export const EditDeck = () => {
   };
 
   return (
-    <section className="editDeck">
+    <section className="editDeck fakeModal">
+      <CloseButton returnTo="/" />
       {cards && (
         <div className="cardGrid">
-          <div className="closeIcon">
-            <Link to="/">
-              <XMarkIcon className="icon" />
-            </Link>
-          </div>
           <div className="gridRow deckNameRow">
             <div className="gridCell deckName col-span-2">
               <input

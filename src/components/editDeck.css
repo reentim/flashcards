@@ -1,9 +1,3 @@
-.editDeck {
-  padding: 4em;
-  background: #2f2f2f;
-  border-radius: 10px;
-}
-
 .cardGrid {
   position: relative;
   display: grid;

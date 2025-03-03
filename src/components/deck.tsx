@@ -2,8 +2,10 @@ import { useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
 import DeckData from '../deckData';
-import { IterableCardsData } from '../cardSet';
 import ResponseData from '../responseData';
+
+import { CloseButton } from './closeButton';
+import { IterableCardsData } from '../cardSet';
 
 import { Card } from './card';
 
@@ -249,5 +251,10 @@ export const Deck = () => {
     </>
   );
 
-  return <section className="deck">{deckUi}</section>;
+  return (
+    <>
+      <CloseButton returnTo="/" />
+      <section className="deck">{deckUi}</section>
+    </>
+  )
 };

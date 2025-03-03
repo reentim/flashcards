@@ -1,0 +1,26 @@
+.fakeModal .closeIcon {
+  background-color: #242424;
+}
+
+.closeIcon {
+  position: absolute;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  right: 1rem;
+  top: 1rem;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  padding-top: 6px;
+  transition: background 200ms;
+  background-color: #333;
+
+  a {
+    color: inherit;
+  }
+
+  &:hover {
+    background: #804848;
+  }
+}

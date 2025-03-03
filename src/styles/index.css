@@ -104,31 +104,20 @@ button,
   grid-column: span 4;
 }
 
-.closeIcon {
-  position: absolute;
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  right: -2em;
-  top: -2em;
-  border-radius: 50%;
-  height: 2em;
-  width: 2em;
-  padding-top: 6px;
-
-  a {
-    color: inherit;
-  }
-
-  &:hover {
-    background: #242424;
-  }
-}
-
 .icon {
   width: 1.5em;
 
   &.lg {
     width: 2.5em;
   }
+}
+
+.fakeModal {
+  padding: 4em;
+  background: #2f2f2f;
+  border-radius: 10px;
+}
+
+section {
+  position: relative;
 }
