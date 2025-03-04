@@ -1,6 +1,6 @@
 import { useLocation } from 'wouter-preact';
 
-import DeckData from '../deckData';
+import DeckData from '../../deckData';
 
 export const NewDeck = () => {
   const [_location, setLocation] = useLocation();

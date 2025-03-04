@@ -68,9 +68,9 @@ export default class DeckData {
 
   static prepareInbuilt() {
     if (Storage.get('deckIds')?.length === 0) {
-      const decks = ['worldFlags', 'russianNouns'];
+      const inbuiltDecks = ['worldFlags', 'russianNouns'];
 
-      decks.forEach((deck) => {
+      inbuiltDecks.forEach((deck) => {
         (async () => {
           const response = await fetch(`/decks/${deck}.json`);
           const file = await response.json();

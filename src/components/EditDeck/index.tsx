@@ -6,11 +6,11 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import DeckData, { CardsData } from '../deckData';
+import DeckData, { CardsData } from '../../deckData';
 
-import { CloseButton } from './closeButton';
+import { CloseButton } from '../CloseButton';
 
-import './editDeck.css';
+import './index.css';
 
 type NewCard = {
   term: string;

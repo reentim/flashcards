@@ -1,10 +1,10 @@
 import { Link } from 'wouter-preact';
 
-import DeckData from '../deckData';
+import DeckData from '../../deckData';
 
-import { EditDeckButton } from './editDeckButton';
+import { EditDeckButton } from '../EditDeckButton';
 
-import './deckListCard.css';
+import './index.css';
 
 export const DeckListCard = ({ deck }: { deck: DeckData }) => {
   return (

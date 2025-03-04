@@ -1,4 +1,4 @@
-import './card.css';
+import './index.css';
 
 interface CardProps {
   term: string;

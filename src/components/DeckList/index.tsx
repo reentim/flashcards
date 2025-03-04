@@ -1,11 +1,11 @@
 import { Link } from 'wouter-preact';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
-import { DeckListCard } from './deckListCard';
+import { DeckListCard } from '../DeckListCard';
 
-import DeckData from '../deckData';
+import DeckData from '../../deckData';
 
-import './deckList.css';
+import './index.css';
 
 export const DeckList = () => {
   const newDeckCard = (

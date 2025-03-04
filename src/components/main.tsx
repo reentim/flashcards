@@ -2,10 +2,6 @@ import { render } from 'preact';
 
 import '../styles/index.css';
 
-import { App } from './app';
-
-import DeckData from '../deckData';
-
-DeckData.prepareInbuilt();
+import { App } from './App';
 
 render(<App />, document.getElementById('app')!);

@@ -1,15 +1,14 @@
 import { useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-import DeckData from '../deckData';
-import ResponseData from '../responseData';
+import DeckData from '../../deckData';
+import ResponseData from '../../responseData';
+import { IterableCardsData } from '../../cardSet';
 
-import { CloseButton } from './closeButton';
-import { IterableCardsData } from '../cardSet';
+import { CloseButton } from '../CloseButton';
+import { Card } from '../Card';
 
-import { Card } from './card';
-
-import './deck.css';
+import './index.css';
 
 type DeckMetaData = {
   name: string;

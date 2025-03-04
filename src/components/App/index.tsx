@@ -1,13 +1,17 @@
 import { Switch, Route } from 'wouter-preact';
 
-import { DeckList } from './deckList';
-import { Deck } from './deck';
-import { EditDeck } from './editDeck';
-import { NewDeck } from './newDeck';
+import DeckData from '../../deckData';
 
-import './app.css';
+import { DeckList } from '../DeckList';
+import { Deck } from '../Deck';
+import { EditDeck } from '../EditDeck';
+import { NewDeck } from '../NewDeck';
+
+import './index.css';
 
 export const App = () => {
+  DeckData.prepareInbuilt();
+
   return (
     <>
       <Switch>
