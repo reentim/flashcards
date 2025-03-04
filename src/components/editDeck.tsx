@@ -193,6 +193,13 @@ export const EditDeck = () => {
 
   const isDeletedCard = (cardId: string) => deletedCardIds.includes(cardId);
 
+  const handleDeleteDeck = () => {
+    if (window.confirm('Permanently delete deck?')) {
+      deck?.delete();
+      setLocation('/');
+    }
+  };
+
   return (
     <section className="editDeck">
       {cards && (
@@ -287,6 +294,15 @@ export const EditDeck = () => {
             ))}
         </div>
       )}
+      <div className="cardGrid">
+        <div className="gridRow">
+          <div className="gridCell col-span-3">
+            <button className="btn danger" onClick={handleDeleteDeck}>
+              Delete deck
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

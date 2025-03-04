@@ -16,4 +16,8 @@ export default class Storage {
       return JSON.parse(data);
     }
   }
+
+  static remove(key: string) {
+    localStorage.removeItem(key);
+  }
 }

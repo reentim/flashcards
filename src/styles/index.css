@@ -63,7 +63,7 @@ button,
   }
 
   &.danger {
-    background-color: transparent;
+    background-color: #444;
     transition: all 500ms;
 
     &:hover {

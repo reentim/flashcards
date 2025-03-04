@@ -104,6 +104,16 @@ export default class DeckData {
     return Object.keys(this.cards).length;
   }
 
+  delete() {
+    const ids = Storage.get('deckIds') || [];
+
+    Storage.set(
+      'deckIds',
+      ids.filter((id: string) => id !== this.id)
+    );
+    Storage.remove(`deck_${this.id}`);
+  }
+
   save(args: DeckProps) {
     const { name, cards, settings } = args;
     let { nextId } = args;
