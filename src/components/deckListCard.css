@@ -1,9 +1,14 @@
 .deckListCard {
   padding: 1em;
-  background: #2f2f2f;
+  background-color: #333;
   text-align: center;
   border-radius: 10px;
   height: 200px;
+  position: relative;
+
+  &:hover {
+    background-color: #444;
+  }
 
   &.new {
     background-color: #363654;
@@ -12,5 +17,11 @@
   & a {
     text-decoration: none;
     color: inherit;
+
+    &.editDeckListCard {
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+    }
   }
 }
