@@ -1,10 +1,12 @@
 .deckListCard {
-  padding: 1em;
   background-color: #333;
   text-align: center;
   border-radius: 10px;
   height: 200px;
-  position: relative;
+  display: block;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
     background-color: #444;
@@ -17,11 +19,5 @@
   & a {
     text-decoration: none;
     color: inherit;
-
-    &.editDeckListCard {
-      position: absolute;
-      bottom: 1em;
-      right: 1em;
-    }
   }
 }

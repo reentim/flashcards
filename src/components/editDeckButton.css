@@ -1,0 +1,13 @@
+.editDeckButton {
+  text-align: right;
+  float: right;
+  color: #999;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  font-size: 10pt;
+  margin-top: 0.5rem;
+
+  .icon {
+    vertical-align: bottom;
+  }
+}

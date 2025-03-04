@@ -8,13 +8,14 @@ import DeckData from '../deckData';
 import './deckList.css';
 
 export const DeckList = () => {
-  const decks = [
-    <div className="deckListCard new">
-      <h3>
-        <Link to="/decks/new">New Deck</Link>
-      </h3>
+  const newDeckCard = (
+    <Link to="/decks/new" className="deckListCard new">
+      <h3>New Deck</h3>
       <PlusCircleIcon className="icon lg" />
-    </div>,
+    </Link>
+  );
+  const decks = [
+    newDeckCard,
     DeckData.all().map((deck) => {
       return <DeckListCard key={deck.id} deck={deck} />;
     }),

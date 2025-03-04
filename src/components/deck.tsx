@@ -256,5 +256,5 @@ export const Deck = () => {
       <CloseButton returnTo="/" />
       <section className="deck">{deckUi}</section>
     </>
-  )
+  );
 };
