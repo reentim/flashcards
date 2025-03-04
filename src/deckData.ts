@@ -66,18 +66,18 @@ export default class DeckData {
     );
   }
 
-  static prepareInbuilt() {
-    if (Storage.get('deckIds')?.length === 0) {
+  static async prepareInbuilt() {
+    if (!Storage.get('deckIds')) {
       const inbuiltDecks = ['worldFlags', 'russianNouns'];
 
-      inbuiltDecks.forEach((deck) => {
-        (async () => {
-          const response = await fetch(`/decks/${deck}.json`);
-          const file = await response.json();
+      const fetchPromises = inbuiltDecks.map(async (deck) => {
+        const response = await fetch(`/decks/${deck}.json`);
+        const file = await response.json();
 
-          this.saveNew(file);
-        })();
+        this.saveNew(file);
       });
+
+      await Promise.all(fetchPromises);
     }
   }
 

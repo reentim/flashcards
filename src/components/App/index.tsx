@@ -1,4 +1,5 @@
 import { Switch, Route } from 'wouter-preact';
+import { useEffect, useState } from 'preact/hooks';
 
 import DeckData from '../../deckData';
 
@@ -10,17 +11,26 @@ import { NewDeck } from '../NewDeck';
 import './index.css';
 
 export const App = () => {
-  DeckData.prepareInbuilt();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await DeckData.prepareInbuilt();
+      setHasLoaded(true);
+    })();
+  }, []);
 
   return (
-    <>
-      <Switch>
-        <Route path="/decks" component={DeckList} />
-        <Route path="/decks/new" component={NewDeck} />
-        <Route path="/decks/:id" component={Deck} />
-        <Route path="/decks/:id/edit" component={EditDeck} />
-        <Route path="/" component={DeckList} />
-      </Switch>
-    </>
+    hasLoaded && (
+      <>
+        <Switch>
+          <Route path="/decks" component={DeckList} />
+          <Route path="/decks/new" component={NewDeck} />
+          <Route path="/decks/:id" component={Deck} />
+          <Route path="/decks/:id/edit" component={EditDeck} />
+          <Route path="/" component={DeckList} />
+        </Switch>
+      </>
+    )
   );
 };
