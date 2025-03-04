@@ -4,6 +4,18 @@
   grid-template-columns: 1fr 1fr 0.25fr;
 }
 
+@media screen and (max-width: 500px) {
+  .editableCards,
+  .newCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.newCard,
+.editableCards {
+  margin-bottom: 2em;
+}
+
 .gridHeader {
   display: contents;
   font-weight: bold;
@@ -16,14 +28,6 @@
 
 .gridRow {
   display: contents;
-
-  &:last-child .gridCell {
-    margin-bottom: 2em;
-  }
-
-  &:only-child .gridCell {
-    margin-bottom: 0;
-  }
 }
 
 .gridCell {
@@ -44,17 +48,17 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  .deleteCard {
+    margin-bottom: 1rem;
+  }
+}
+
 .deckNameRow {
   .deckName > input {
     font-size: 18px;
     font-weight: bold;
     width: 100%;
-  }
-}
-
-.newCard {
-  textarea {
-    margin-bottom: 2em;
   }
 }
 

@@ -22,6 +22,13 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  .deck {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
+
 @keyframes celebrate {
   0% {
   }

@@ -244,8 +244,10 @@ export const Deck = () => {
       <div className="cardsContainer">
         <Card
           isRevealed={isRevealed}
+          cardId={cardData.id}
           term={cardData.term}
           definition={cardData.definition}
+          responseHandler={saveResponse}
         />
         {answeredCardsUi}
       </div>

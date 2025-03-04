@@ -202,53 +202,55 @@ export const EditDeck = () => {
   return (
     <section className="editDeck fakeModal">
       <CloseButton returnTo="/" />
-      {cards && (
-        <div className="cardGrid">
-          <div className="gridRow deckNameRow">
-            <div className="gridCell deckName col-span-2">
-              <input
-                type="text"
-                ref={deckNameRef}
-                value={deckData?.name}
-                onInput={(event) =>
-                  updateDeck('name', event.currentTarget.value)
-                }
-              />
-            </div>
-            {saveStatusIndicator}
+      <div className="cardGrid">
+        <div className="gridRow deckNameRow">
+          <div className="gridCell deckName col-span-2">
+            <input
+              type="text"
+              ref={deckNameRef}
+              value={deckData?.name}
+              onInput={(event) => updateDeck('name', event.currentTarget.value)}
+            />
           </div>
-          <div className="gridHeader">
-            <div>Front</div>
-            <div>Back</div>
-            <div></div>
+          {saveStatusIndicator}
+        </div>
+        <div className="gridHeader">
+          <div>Front</div>
+          <div>Back</div>
+          <div></div>
+        </div>
+      </div>
+      <div className="cardGrid newCard">
+        <div className="gridRow">
+          <div className="gridCell">
+            <textarea
+              rows={5}
+              ref={newCardTermRef}
+              value={newCard.term}
+              onKeyDown={handleKeyDown}
+              onInput={(event) =>
+                handleNewCardInput('term', event.currentTarget.value)
+              }
+            ></textarea>
           </div>
-          <div className="gridRow newCard">
-            <div className="gridCell">
-              <textarea
-                rows={5}
-                ref={newCardTermRef}
-                value={newCard.term}
-                onKeyDown={handleKeyDown}
-                onInput={(event) =>
-                  handleNewCardInput('term', event.currentTarget.value)
-                }
-              ></textarea>
-            </div>
-            <div className="gridCell">
-              <textarea
-                rows={5}
-                value={newCard.definition}
-                onKeyDown={handleKeyDown}
-                onInput={(event) =>
-                  handleNewCardInput('definition', event.currentTarget.value)
-                }
-              ></textarea>
-            </div>
-            <div className="gridCell">
-              <button onClick={addCard}>Add</button>
-            </div>
+          <div className="gridCell">
+            <textarea
+              rows={5}
+              value={newCard.definition}
+              onKeyDown={handleKeyDown}
+              onInput={(event) =>
+                handleNewCardInput('definition', event.currentTarget.value)
+              }
+            ></textarea>
           </div>
-          {Object.entries(cards)
+          <div className="gridCell">
+            <button onClick={addCard}>Add</button>
+          </div>
+        </div>
+      </div>
+      <div className="cardGrid editableCards">
+        {cards &&
+          Object.entries(cards)
             .reverse()
             .map(([cardId, [term, definition]]) => (
               <div
@@ -279,7 +281,7 @@ export const EditDeck = () => {
                 </div>
                 <div className="gridCell">
                   <button
-                    class="sm danger"
+                    className="sm danger deleteCard"
                     onClick={(_event) => deleteCard(cardId)}
                   >
                     <TrashIcon className="icon" />
@@ -287,8 +289,7 @@ export const EditDeck = () => {
                 </div>
               </div>
             ))}
-        </div>
-      )}
+      </div>
       <div className="cardGrid">
         <div className="gridRow">
           <div className="gridCell col-span-3">

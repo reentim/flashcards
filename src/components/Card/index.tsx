@@ -6,6 +6,8 @@ interface CardProps {
   isRevealed: boolean;
   satisfaction?: 'satisfied' | 'dissatisfied';
   hidden?: boolean;
+  responseHandler?: Function;
+  cardId?: number;
 }
 
 export const Card = ({
@@ -13,6 +15,8 @@ export const Card = ({
   term,
   definition,
   satisfaction,
+  cardId,
+  responseHandler,
 }: CardProps) => {
   const isEmojiOnly = /^\p{Emoji}*$/u.test(term);
   const classes = [
@@ -25,8 +29,36 @@ export const Card = ({
     .filter((val) => val)
     .join(' ');
 
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const touchStart = event.touches[0];
+    touchStartX = touchStart.clientX;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    if (!responseHandler) {
+      return;
+    }
+
+    touchEndX = event.changedTouches[0].clientX;
+
+    const swipeDistance = touchEndX - touchStartX;
+
+    if (swipeDistance > 50) {
+      responseHandler({ satisfaction: 1, cardId: cardId });
+    } else if (swipeDistance < -50) {
+      responseHandler({ satisfaction: 0, cardId: cardId });
+    }
+  };
+
   return (
-    <div className={classes}>
+    <div
+      className={classes}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="front">
         <div className="term">{term}</div>
       </div>

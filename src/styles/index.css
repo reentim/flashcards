@@ -25,11 +25,17 @@
 
 body {
   margin: 0;
-  padding: 2em;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    padding: 2rem 0;
+  }
 }
 
 h1 {
@@ -116,6 +122,14 @@ button,
   padding: 4em;
   background: #2f2f2f;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .fakeModal {
+    padding: 0;
+    background: transparent;
+    position: initial;
+  }
 }
 
 section {
