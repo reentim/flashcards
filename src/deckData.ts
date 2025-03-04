@@ -43,7 +43,7 @@ export default class DeckData {
       markAsLearntAfter: 3,
     };
     this.cardSet = new CardSet(this);
-    this.nextId = nextId;
+    this.nextId = nextId || 1;
   }
 
   static all(): Array<DeckData> {
