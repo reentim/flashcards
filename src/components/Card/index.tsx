@@ -14,11 +14,13 @@ export const Card = ({
   definition,
   satisfaction,
 }: CardProps) => {
+  const isEmojiOnly = /^\p{Emoji}*$/u.test(term);
   const classes = [
     'card',
     satisfaction,
     !satisfaction && 'answering',
     isRevealed ? 'revealed' : '',
+    isEmojiOnly ? 'emojiOnly' : '',
   ]
     .filter((val) => val)
     .join(' ');

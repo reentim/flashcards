@@ -38,9 +38,13 @@
 
   .term {
     font-weight: bold;
-    font-size: 64pt;
+    font-size: 32pt;
     white-space: pre-wrap;
     word-wrap: break-word;
+  }
+
+  &.emojiOnly .term {
+    font-size: 64pt;
   }
 
   .definition {
