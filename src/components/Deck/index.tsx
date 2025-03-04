@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'wouter-preact';
+import { Redirect, useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
 import DeckData from '../../deckData';
@@ -236,6 +236,8 @@ export const Deck = () => {
     );
   });
 
+  const hasFinished = answerCount === cardsData?.length;
+
   const deckUi = (
     <>
       {metaDataUi}
@@ -252,8 +254,9 @@ export const Deck = () => {
 
   return (
     <>
+      {hasFinished && <Redirect to="/" />}
       <CloseButton returnTo="/" />
-      <section className="deck">{deckUi}</section>
+      {cardsData && <section className="deck">{deckUi}</section>}
     </>
   );
 };
