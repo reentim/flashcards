@@ -56,9 +56,7 @@ export const EditDeck = () => {
   }, []);
 
   useLayoutEffect(() => {
-    const deck = DeckData.find(deckId);
-
-    if (deck?.name === 'New deck') {
+    if (deckNameRef.current?.value === 'New deck') {
       deckNameRef.current?.select();
     }
   });
