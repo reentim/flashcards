@@ -1,5 +1,5 @@
 import Storage from './storage';
-import ResponseData from './responseData';
+import ResponseModel from './responseModel';
 import CardSet from './cardSet';
 
 export interface DeckProps {
@@ -25,7 +25,7 @@ interface DeckSettings {
   markAsLearntAfter: number;
 }
 
-export default class DeckData {
+export default class DeckModel {
   id: string;
   name: string;
   cards: CardsData;
@@ -46,13 +46,13 @@ export default class DeckData {
     this.nextId = nextId || 1;
   }
 
-  static all(): Array<DeckData> {
+  static all(): Array<DeckModel> {
     const ids = Storage.get('deckIds') || [];
 
     return ids.map((id: string) => this.find(id));
   }
 
-  static find(id: string | undefined): DeckData | undefined {
+  static find(id: string | undefined): DeckModel | undefined {
     const data = id && Storage.get(`deck_${id}`);
 
     return (
@@ -135,7 +135,7 @@ export default class DeckData {
 
   responses() {
     return (Storage.get(`deck_${this.id}_responseIds`) || []).map(
-      (id: string) => ResponseData.find(id)
+      (id: string) => ResponseModel.find(id)
     );
   }
 
@@ -143,7 +143,7 @@ export default class DeckData {
     const id = Storage.get(`deck_${this.id}_responseIds`)?.at(-1);
 
     if (id) {
-      return ResponseData.find(id);
+      return ResponseModel.find(id);
     }
   }
 }

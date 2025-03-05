@@ -1,11 +1,11 @@
 import { useLocation } from 'wouter-preact';
 
-import DeckData from '../../deckData';
+import DeckModel from '../../deckModel';
 
 export const NewDeck = () => {
   const [_location, setLocation] = useLocation();
 
-  const deck = DeckData.saveNew({
+  const deck = DeckModel.saveNew({
     name: 'New deck',
     cards: {},
   });

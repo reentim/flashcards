@@ -1,12 +1,12 @@
 import { Link } from 'wouter-preact';
 
-import DeckData from '../../deckData';
+import DeckModel from '../../deckModel';
 
 import { EditDeckButton } from '../EditDeckButton';
 
 import './index.css';
 
-export const DeckListCard = ({ deck }: { deck: DeckData }) => {
+export const DeckListCard = ({ deck }: { deck: DeckModel }) => {
   return (
     <div>
       <Link to={`/decks/${deck.id}`} className="deckListCard">

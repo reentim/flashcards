@@ -6,7 +6,7 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import DeckData, { CardsData } from '../../deckData';
+import DeckModel, { CardsData } from '../../deckModel';
 
 import { CloseButton } from '../CloseButton';
 
@@ -20,7 +20,7 @@ type NewCard = {
 export const EditDeck = () => {
   const { id: deckId } = useParams();
   const [_location, setLocation] = useLocation();
-  const [deckData, setDeckData] = useState<DeckData | null>(null);
+  const [deckModel, setDeckModel] = useState<DeckModel | null>(null);
   const [cards, setCards] = useState<CardsData | null>(null);
   const [hasDirtyChanges, setHasDirtyChanges] = useState<boolean | null>(null);
   const [deletedCardIds, setDeletedCardIds] = useState<Array<string>>([]);
@@ -31,15 +31,15 @@ export const EditDeck = () => {
   const newCardTermRef = useRef<HTMLTextAreaElement>(null);
   const deckNameRef = useRef<HTMLInputElement>(null);
   const newCardRef = useRef<NewCard>({ term: '', definition: '' });
-  const deckDataRef = useRef<DeckData | null>(null);
+  const deckModelRef = useRef<DeckModel | null>(null);
   const cardsRef = useRef<CardsData | null>(null);
 
-  const deck = DeckData.find(deckId);
+  const deck = DeckModel.find(deckId);
 
   useEffect(() => {
-    deckDataRef.current = deckData;
+    deckModelRef.current = deckModel;
     cardsRef.current = cards;
-  }, [deckData, cards]);
+  }, [deckModel, cards]);
 
   useEffect(() => {
     newCardRef.current = newCard;
@@ -47,7 +47,7 @@ export const EditDeck = () => {
 
   useEffect(() => {
     if (deck) {
-      setDeckData(deck);
+      setDeckModel(deck);
       setCards(deck.cards);
       nextIdRef.current = deck.nextId;
     } else {
@@ -92,8 +92,8 @@ export const EditDeck = () => {
   const updateDeck = (field: 'name', value: string) => {
     setHasDirtyChanges(true);
 
-    if (deckDataRef.current) {
-      deckDataRef.current[field] = value;
+    if (deckModelRef.current) {
+      deckModelRef.current[field] = value;
     }
 
     debouncedHandleSave();
@@ -149,19 +149,19 @@ export const EditDeck = () => {
   };
 
   const handleSave = () => {
-    const latestDeckData = deckDataRef.current;
+    const latestDeckModel = deckModelRef.current;
     const latestCards = cardsRef.current;
 
-    if (latestDeckData && latestCards) {
-      const updatedDeckData = {
-        ...latestDeckData,
+    if (latestDeckModel && latestCards) {
+      const updatedDeckModel = {
+        ...latestDeckModel,
         ...{
-          name: latestDeckData.name,
+          name: latestDeckModel.name,
           cards: latestCards,
         },
       };
 
-      latestDeckData.save(updatedDeckData);
+      latestDeckModel.save(updatedDeckModel);
       setHasDirtyChanges(false);
     }
   };
@@ -208,7 +208,7 @@ export const EditDeck = () => {
             <input
               type="text"
               ref={deckNameRef}
-              value={deckData?.name}
+              value={deckModel?.name}
               onInput={(event) => updateDeck('name', event.currentTarget.value)}
             />
           </div>

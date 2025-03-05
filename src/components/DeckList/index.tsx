@@ -3,7 +3,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
 import { DeckListCard } from '../DeckListCard';
 
-import DeckData from '../../deckData';
+import DeckModel from '../../deckModel';
 
 import './index.css';
 
@@ -16,7 +16,7 @@ export const DeckList = () => {
   );
   const decks = [
     newDeckCard,
-    DeckData.all().map((deck) => {
+    DeckModel.all().map((deck) => {
       return <DeckListCard key={deck.id} deck={deck} />;
     }),
   ];

@@ -1,7 +1,7 @@
 import { Switch, Route } from 'wouter-preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import DeckData from '../../deckData';
+import DeckModel from '../../deckModel';
 
 import { DeckList } from '../DeckList';
 import { Deck } from '../Deck';
@@ -15,7 +15,7 @@ export const App = () => {
 
   useEffect(() => {
     (async () => {
-      await DeckData.prepareInbuilt();
+      await DeckModel.prepareInbuilt();
       setHasLoaded(true);
     })();
   }, []);

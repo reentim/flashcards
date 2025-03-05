@@ -1,8 +1,8 @@
 import { Redirect, useParams, useLocation } from 'wouter-preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-import DeckData from '../../deckData';
-import ResponseData from '../../responseData';
+import DeckModel from '../../deckModel';
+import ResponseModel from '../../responseModel';
 import { IterableCardsData } from '../../cardSet';
 
 import { CloseButton } from '../CloseButton';
@@ -43,7 +43,7 @@ const LearntTermCelebration = () => {
 
 export const Deck = () => {
   const { id: deckId } = useParams();
-  const deck = DeckData.find(deckId);
+  const deck = DeckModel.find(deckId);
 
   const [_location, setLocation] = useLocation();
 
@@ -182,7 +182,7 @@ export const Deck = () => {
     setSatisfaction(
       Object.assign(satisfaction, { [cardId]: satisfactionValue })
     );
-    ResponseData.saveNew({
+    ResponseModel.saveNew({
       id: refs.current.responseId!,
       deckId: deckId!,
       satisfaction: satisfaction,

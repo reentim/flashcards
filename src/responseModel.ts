@@ -4,35 +4,35 @@ export type Satisfaction = {
   [cardId: string]: 0 | 1;
 };
 
-interface NewResponseData {
+interface NewResponseModel {
   id: string;
   deckId: string;
   satisfaction: Satisfaction;
 }
 
-interface ResponseDataProps {
+interface ResponseModelProps {
   id: string;
   satisfaction: Satisfaction;
 }
 
-export default class ResponseData {
+export default class ResponseModel {
   id: string;
   satisfaction: Satisfaction;
 
-  constructor(props: ResponseDataProps) {
+  constructor(props: ResponseModelProps) {
     const { id, satisfaction } = props;
 
     this.id = id;
     this.satisfaction = satisfaction;
   }
 
-  static find(id: string | undefined): ResponseData | undefined {
+  static find(id: string | undefined): ResponseModel | undefined {
     const response = id && Storage.get(`response_${id}`);
 
     return response && new this({ id: id, satisfaction: response });
   }
 
-  static saveNew(data: NewResponseData) {
+  static saveNew(data: NewResponseModel) {
     const existingResponseIds =
       Storage.get(`deck_${data.deckId}_responseIds`) || [];
 

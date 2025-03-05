@@ -1,24 +1,24 @@
 import { shuffle } from 'lodash';
 
-import DeckData from './deckData';
-import ResponseData from './responseData';
+import DeckModel from './deckModel';
+import ResponseModel from './responseModel';
 
 export type IterableCard = [number, string, string];
 
 export type IterableCardsData = Array<IterableCard>;
 
 export default class CardSet {
-  deck: DeckData;
+  deck: DeckModel;
   allAnswers: Array<[string, number][]>;
   satisfactionStreak: {
     [key: string]: number;
   };
 
-  constructor(deck: DeckData) {
+  constructor(deck: DeckModel) {
     this.deck = deck;
     this.allAnswers = deck
       .responses()
-      .map((response: ResponseData) => Object.entries(response.satisfaction));
+      .map((response: ResponseModel) => Object.entries(response.satisfaction));
     this.satisfactionStreak = this.allAnswers.reduce(
       (acc, response) => {
         response.forEach(([cardId, value]) => {
