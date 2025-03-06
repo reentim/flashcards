@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 500px) {
   .deckList {
-    padding: 1rem;
+    padding: 1rem 1rem 8rem;
     gap: 1rem;
     overflow: scroll;
     height: 100vh;
