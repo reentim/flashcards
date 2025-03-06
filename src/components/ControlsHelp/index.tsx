@@ -25,65 +25,57 @@ export const ControlsHelp = ({
   };
 
   return (
-    !isHidden && (
-      <div className={`controlsHelp ${isHidden ? 'hidden' : ''}`}>
-        <h4>Controls</h4>
-        <div className="controlsHelp__keys">
-          {!isCardRevealed ? (
-            <>
+    <div className={`controlsHelp ${isHidden ? 'hidden' : ''}`}>
+      <h4>Control help</h4>
+      <div className="controlsHelp__keys">
+        {!isCardRevealed ? (
+          <>
+            {hasTouchSupport ? (
               <div>
-                {hasTouchSupport ? (
-                  <div>
-                    <ArrowDownOnSquareIcon className="icon" />
-                    swipe card down to reveal
-                  </div>
-                ) : (
-                  <>
-                    <kbd>↓</kbd>
-                    <div>reveal card</div>
-                  </>
-                )}
+                <ArrowDownOnSquareIcon className="icon" />
+                swipe card down to reveal
               </div>
-            </>
-          ) : (
-            <>
+            ) : (
+              <div className="flex">
+                <kbd>↓</kbd>
+                <div>reveal card</div>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {hasTouchSupport ? (
               <div>
-                {hasTouchSupport ? (
-                  <div>
-                    <ArrowRightStartOnRectangleIcon className="icon" />
-                    swipe card right to mark as correct
-                  </div>
-                ) : (
-                  <>
-                    <kbd>→</kbd>
-                    <div>mark as correct</div>
-                  </>
-                )}
+                <ArrowRightStartOnRectangleIcon className="icon" />
+                swipe card right to mark as correct
               </div>
+            ) : (
+              <div className="flex">
+                <kbd>→</kbd>
+                <div>mark as correct</div>
+              </div>
+            )}
+            {hasTouchSupport ? (
               <div>
-                {hasTouchSupport ? (
-                  <div>
-                    <ArrowLeftStartOnRectangleIcon className="icon" />
-                    swipe card left to mark as incorrect
-                  </div>
-                ) : (
-                  <>
-                    <kbd>←</kbd>
-                    <div>mark as incorrect</div>
-                  </>
-                )}
+                <ArrowLeftStartOnRectangleIcon className="icon" />
+                swipe card left to mark as incorrect
               </div>
-            </>
-          )}
-        </div>
-        {isHidingAllowed && (
-          <div className="controlsHelp__buttonContainer">
-            <button className="col-span-2" onClick={hideControls}>
-              Dismiss
-            </button>
-          </div>
+            ) : (
+              <div className="flex">
+                <kbd>←</kbd>
+                <div>mark as incorrect</div>
+              </div>
+            )}
+          </>
         )}
       </div>
-    )
+      {isHidingAllowed && (
+        <div className="controlsHelp__buttonContainer">
+          <button className="col-span-2" onClick={hideControls}>
+            Dismiss
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
