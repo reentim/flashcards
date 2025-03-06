@@ -10,15 +10,15 @@
 }
 
 .controlsHelp__keys {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 1rem;
-  width: 50%;
-  margin-left: calc(50% - 5rem);
+  text-align: center;
+
+  .icon {
+    vertical-align: bottom;
+    margin-right: 1rem;
+  }
 
   & > div {
-    display: contents;
+    margin-bottom: 1rem;
   }
 }
 

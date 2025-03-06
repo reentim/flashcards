@@ -1,4 +1,9 @@
 import { useState } from 'preact/hooks';
+import {
+  ArrowDownOnSquareIcon,
+  ArrowLeftStartOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
+} from '@heroicons/react/24/outline';
 
 import Storage from '../../storage';
 
@@ -27,19 +32,46 @@ export const ControlsHelp = ({
           {!isCardRevealed ? (
             <>
               <div>
-                <kbd>{hasTouchSupport ? 'swipe down' : '↓'}</kbd>
-                <div>reveal card</div>
+                {hasTouchSupport ? (
+                  <div>
+                    <ArrowDownOnSquareIcon className="icon" />
+                    swipe card down to reveal
+                  </div>
+                ) : (
+                  <>
+                    <kbd>↓</kbd>
+                    <div>reveal card</div>
+                  </>
+                )}
               </div>
             </>
           ) : (
             <>
               <div>
-                <kbd>{hasTouchSupport ? 'swipe right' : '→'}</kbd>
-                <div>mark as correct</div>
+                {hasTouchSupport ? (
+                  <div>
+                    <ArrowRightStartOnRectangleIcon className="icon" />
+                    swipe card right to mark as correct
+                  </div>
+                ) : (
+                  <>
+                    <kbd>→</kbd>
+                    <div>mark as correct</div>
+                  </>
+                )}
               </div>
               <div>
-                <kbd>{hasTouchSupport ? 'swipe left' : '←'}</kbd>
-                <div>mark as incorrect</div>
+                {hasTouchSupport ? (
+                  <div>
+                    <ArrowLeftStartOnRectangleIcon className="icon" />
+                    swipe card left to mark as incorrect
+                  </div>
+                ) : (
+                  <>
+                    <kbd>←</kbd>
+                    <div>mark as incorrect</div>
+                  </>
+                )}
               </div>
             </>
           )}
