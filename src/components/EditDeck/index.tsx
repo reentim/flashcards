@@ -168,7 +168,7 @@ export const EditDeck = () => {
 
   const saveStatusIndicator = (
     <div
-      class={`gridCell saveStatusIndicator ${hasDirtyChanges === false ? 'saved' : ''}`}
+      class={`saveStatusIndicator ${hasDirtyChanges === false ? 'saved' : ''}`}
     >
       {hasDirtyChanges === true && (
         <ArrowPathIcon className="icon arrowSpinner" />
@@ -200,11 +200,12 @@ export const EditDeck = () => {
   };
 
   return (
-    <section className="editDeck fakeModal">
+    <section className="editDeck">
       <CloseButton returnTo="/" />
       <div className="cardGrid">
+        {saveStatusIndicator}
         <div className="gridRow deckNameRow">
-          <div className="gridCell deckName col-span-2">
+          <div className="gridCell deckName col-span-3">
             <input
               type="text"
               ref={deckNameRef}
@@ -212,7 +213,6 @@ export const EditDeck = () => {
               onInput={(event) => updateDeck('name', event.currentTarget.value)}
             />
           </div>
-          {saveStatusIndicator}
         </div>
         <div className="gridHeader">
           <div>Front</div>

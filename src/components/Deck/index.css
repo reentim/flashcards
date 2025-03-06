@@ -1,6 +1,6 @@
 .deck {
-  margin-top: 4em;
-  width: 33%;
+  padding-top: 4rem;
+  width: 100%;
   overflow: hidden;
 
   .metaData {
@@ -26,7 +26,7 @@
 @media screen and (max-width: 500px) {
   .deck {
     width: 100%;
-    padding: 0 1rem;
+    padding: 4rem 1rem 0;
   }
 }
 

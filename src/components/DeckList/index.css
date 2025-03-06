@@ -1,8 +1,15 @@
 .deckList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  padding: 1em;
-  width: 1000px;
+  padding: 1rem;
+  width: 100vw;
   gap: 2rem;
   height: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .deckList {
+    overflow: scroll;
+    height: 100vh;
+  }
 }
