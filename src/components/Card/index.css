@@ -96,6 +96,10 @@
     opacity: 0;
   }
 
+  99% {
+    z-index: 1;
+  }
+
   100% {
     rotate: 30deg;
     opacity: 0;
@@ -111,6 +115,10 @@
   75% {
     translate: -200%;
     opacity: 0;
+  }
+
+  99% {
+    z-index: 1;
   }
 
   100% {
