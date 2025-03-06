@@ -41,7 +41,6 @@
     "São Paulo, Brazil": "Tietê River",
     "Tehran, Iran": "Karun River",
     "Milan, Italy": "Po River",
-    "Hong Kong, China": "Victoria Harbour",
     "Jakarta, Indonesia": "Ciliwung River",
     "Manila, Philippines": "Pasig River",
     "Oslo, Norway": "Oslofjord and Akerselva River",
@@ -53,7 +52,6 @@
     "Giza, Egypt": "Nile River",
     "Luanda, Angola": "Cuanza River",
     "Tunis, Tunisia": "Medjerda River",
-    "Jeddah, Saudi Arabia": "Red Sea",
     "Beijing, China": "Chaobai River",
     "Algiers, Algeria": "Chiffa River",
     "Lagos, Nigeria": "Niger River",
@@ -62,7 +60,6 @@
     "Sydney, Australia": "Toongabbie (Parramatta River)",
     "Dallas, USA": "Trinity River",
     "Austin, USA": "Colorado River",
-    "Seattle, USA": "Puget Sound",
     "Bangalore, India": "Vrishabhavathi River",
     "Denver, USA": "South Platte River",
     "Portland, USA": "Willamette River",
@@ -77,7 +74,6 @@
     "Accra, Ghana": "Densu River",
     "Kiev, Ukraine": "Dnieper River",
     "Nairobi, Kenya": "Nairobi River",
-    "Baku, Azerbaijan": "Caspian Sea",
     "Abuja, Nigeria": "Niger River",
     "Minsk, Belarus": "Svislach River",
     "Singapore, Singapore": "Singapore River",
@@ -199,7 +195,6 @@
     "Plovdiv, Bulgaria": "Maritsa River",
     "Odesa, Ukraine": "Dniester River",
     "Banja Luka, Bosnia and Herzegovina": "Vrbas River",
-    "Monaco, Monaco": "Riviera of Mediterranean Sea",
     "Zadar, Croatia": "Zrmanja River",
     "Brno, Czech Republic": "Svitava River",
     "Kosice, Slovakia": "Hornád River",
@@ -275,7 +270,6 @@
     "Chatham-Kent, Canada": "Thames River",
     "Airdrie, Canada": "Poplar Creek",
     "Prince Albert, Canada": "Saskatchewan River",
-    "Nanaimo, Canada": "Harbour City",
     "Medicine Hat, Canada": "South Saskatchewan River",
     "Sarnia, Canada": "St. Clair River",
     "Moose Jaw, Canada": "Moose Jaw River",
@@ -283,7 +277,6 @@
     "Saint John, Canada": "Kennebecasis River",
     "Bathurst, Canada": "Nepisiguit River",
     "Morden, Canada": "Red River",
-    "Brockville, Canada": "St. Lawrence River",
-    "Yarmouth, Canada": "Yarmouth Harbour"
+    "Brockville, Canada": "St. Lawrence River"
   }
 }
