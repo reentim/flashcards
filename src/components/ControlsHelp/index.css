@@ -7,6 +7,11 @@
   h4 {
     text-align: center;
   }
+
+  &.hidden {
+    transition: translate 500ms ease;
+    translate: 0 100%;
+  }
 }
 
 .controlsHelp__keys {
@@ -19,6 +24,12 @@
 
   & > div {
     margin-bottom: 1rem;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -35,9 +46,7 @@ kbd {
   white-space: nowrap;
   padding: 0.5rem;
   min-width: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-right: 1rem;
 }
 
 .controlsHelp__buttonContainer {
