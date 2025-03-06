@@ -8,6 +8,7 @@ interface CardProps {
   hidden?: boolean;
   responseHandler?: Function;
   cardId?: number;
+  onReveal?: Function;
 }
 
 export const Card = ({
@@ -17,6 +18,7 @@ export const Card = ({
   satisfaction,
   cardId,
   responseHandler,
+  onReveal,
 }: CardProps) => {
   const isEmojiOnly = /^\p{Emoji}*$/u.test(term);
   const classes = [
@@ -29,12 +31,14 @@ export const Card = ({
     .filter((val) => val)
     .join(' ');
 
-  let touchStartX = 0;
-  let touchEndX = 0;
+  let touchStart = { x: 0, y: 0 };
+  let touchEnd = { x: 0, y: 0 };
 
   const handleTouchStart = (event: TouchEvent) => {
-    const touchStart = event.touches[0];
-    touchStartX = touchStart.clientX;
+    touchStart = {
+      x: event.touches[0].clientX,
+      y: event.touches[0].clientY,
+    };
   };
 
   const handleTouchEnd = (event: TouchEvent) => {
@@ -42,14 +46,26 @@ export const Card = ({
       return;
     }
 
-    touchEndX = event.changedTouches[0].clientX;
+    touchEnd = {
+      x: event.changedTouches[0].clientX,
+      y: event.changedTouches[0].clientY,
+    };
 
-    const swipeDistance = touchEndX - touchStartX;
+    const swipeDistance = {
+      x: touchEnd.x - touchStart.x,
+      y: touchEnd.y - touchStart.y,
+    };
 
-    if (swipeDistance > 50) {
-      responseHandler({ satisfaction: 1, cardId: cardId });
-    } else if (swipeDistance < -50) {
-      responseHandler({ satisfaction: 0, cardId: cardId });
+    if (!isRevealed) {
+      if (swipeDistance.y > 25) {
+        onReveal && onReveal();
+      }
+    } else {
+      if (swipeDistance.x > 25) {
+        responseHandler({ satisfaction: 1, cardId: cardId });
+      } else if (swipeDistance.x < -25) {
+        responseHandler({ satisfaction: 0, cardId: cardId });
+      }
     }
   };
 

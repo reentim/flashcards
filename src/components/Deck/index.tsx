@@ -249,6 +249,7 @@ export const Deck = () => {
           term={cardData.term}
           definition={cardData.definition}
           responseHandler={saveResponse}
+          onReveal={revealDefinition}
         />
         {answeredCardsUi}
       </div>

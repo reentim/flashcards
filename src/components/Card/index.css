@@ -99,6 +99,7 @@
   100% {
     rotate: 30deg;
     opacity: 0;
+    z-index: -1;
   }
 }
 
@@ -115,5 +116,6 @@
   100% {
     rotate: -30deg;
     opacity: 0;
+    z-index: -1;
   }
 }
