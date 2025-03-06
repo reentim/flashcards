@@ -68,7 +68,12 @@ export default class DeckModel {
 
   static async prepareInbuilt() {
     if (!Storage.get('deckIds')) {
-      const inbuiltDecks = ['worldFlags', 'riverCities', 'russianNouns'];
+      const inbuiltDecks = [
+        'worldFlags',
+        'riverCities',
+        'n5Kanji',
+        'russianNouns',
+      ];
 
       const fetchPromises = inbuiltDecks.map(async (deck) => {
         const response = await fetch(`/decks/${deck}.json`);
