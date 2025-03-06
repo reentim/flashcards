@@ -7,6 +7,7 @@ import { IterableCardsData } from '../../cardSet';
 
 import { CloseButton } from '../CloseButton';
 import { Card } from '../Card';
+import { ControlsHelp } from '../ControlsHelp';
 
 import './index.css';
 
@@ -259,6 +260,7 @@ export const Deck = () => {
       {hasFinished && <Redirect to="/" />}
       <CloseButton returnTo="/" />
       {cardsData && <section className="deck">{deckUi}</section>}
+      <ControlsHelp isCardRevealed={isRevealed} isHidingAllowed={index > 0} />
     </>
   );
 };
