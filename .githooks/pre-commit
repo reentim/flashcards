@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+if git diff --quiet; then
+  npm run format
+
+  if ! git diff --quiet; then
+    git add .
+  fi
+else
+  npm run check_formatting
+fi
+
+npm run check_types
+npm run test

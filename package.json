@@ -9,7 +9,8 @@
     "format": "prettier --write ./src ./test",
     "preview": "vite preview",
     "test": "jest",
-    "check_types": "tsc -b"
+    "check_types": "tsc -b",
+    "check_formatting": "prettier --check ./src ./test"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
