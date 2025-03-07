@@ -3,6 +3,7 @@ import {
   ArrowDownOnSquareIcon,
   ArrowLeftStartOnRectangleIcon,
   ArrowRightStartOnRectangleIcon,
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 
 import Storage from '../../storage';
@@ -24,7 +25,12 @@ export const ControlsHelp = ({
     setHidden(true);
   };
 
-  return (
+  const showControls = (_event: MouseEvent) => {
+    Storage.remove('hideControls');
+    setHidden(false);
+  };
+
+  const controls = (
     <div className={`controlsHelp ${isHidden ? 'hidden' : ''}`}>
       <h4>Controls</h4>
       <div className="controlsHelp__keys">
@@ -78,4 +84,12 @@ export const ControlsHelp = ({
       )}
     </div>
   );
+
+  const helpButton = (
+    <button className="helpButton" onClick={showControls}>
+      <QuestionMarkCircleIcon className="icon" />
+    </button>
+  );
+
+  return isHidden ? helpButton : controls;
 };
