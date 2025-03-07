@@ -26,7 +26,7 @@ export const ControlsHelp = ({
 
   return (
     <div className={`controlsHelp ${isHidden ? 'hidden' : ''}`}>
-      <h4>Control help</h4>
+      <h4>Controls</h4>
       <div className="controlsHelp__keys">
         {!isCardRevealed ? (
           <>
