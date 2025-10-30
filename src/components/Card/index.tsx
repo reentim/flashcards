@@ -35,6 +35,7 @@ export const Card = ({
   let touchEnd = { x: 0, y: 0 };
 
   const handleTouchStart = (event: TouchEvent) => {
+    event.preventDefault();
     touchStart = {
       x: event.touches[0].clientX,
       y: event.touches[0].clientY,
@@ -42,6 +43,8 @@ export const Card = ({
   };
 
   const handleTouchEnd = (event: TouchEvent) => {
+    event.preventDefault();
+
     if (!responseHandler) {
       return;
     }

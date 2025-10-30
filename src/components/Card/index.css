@@ -16,6 +16,7 @@
   transform: translateX(-50%);
   transition: all 500ms;
   min-width: 300px;
+  touch-action: none;
 
   &.satisfied {
     animation: satisfied 1000ms ease-out forwards;
