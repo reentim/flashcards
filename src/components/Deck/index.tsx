@@ -188,13 +188,15 @@ export const Deck = () => {
       deckId: deckId!,
       satisfaction: satisfaction,
     });
+
+    setIsRevealed(false);
+
     animateAnsweredCard(cardId, satisfactionValue);
     selectNextCard();
   };
 
   const selectNextCard = () => {
     setIndex(refs.current.index + 1);
-    setIsRevealed(false);
   };
 
   const celebrateLearntAnimations = animations['learnt'].map((id) => (
@@ -244,6 +246,7 @@ export const Deck = () => {
       {metaDataUi}
       <div className="cardsContainer">
         <Card
+          key={cardData.id}
           isRevealed={isRevealed}
           cardId={cardData.id}
           term={cardData.term}
